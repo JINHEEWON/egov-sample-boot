@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: egov-sample-boot
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+    username: sa
+    password: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: false
+  sql:
+    init:
+      mode: never
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET:your-256-bit-secret-key-here-minimum-32-characters}
+    expiration: 86400000 # 24 hours in milliseconds
+    refresh-token:
+      expiration: 604800000 # 7 days in milliseconds
+
+logging:
+  level:
+    org.egovframe.sample: DEBUG
+    org.springframework: INFO
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+cors:
+  allowed-origins: http://localhost:5173
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: Authorization,Content-Type
+  exposed-headers: Authorization
+  allow-credentials: true
+  max-age: 3600 
