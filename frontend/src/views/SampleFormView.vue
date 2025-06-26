@@ -143,61 +143,102 @@ onMounted(() => {
 
 <style scoped>
 .sample-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 1.5rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 label {
-  font-weight: bold;
+  font-weight: 600;
+  color: #495057;
 }
 
 input, textarea, select {
-  padding: 8px;
+  padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #4CAF50;
 }
 
 input.error, textarea.error, select.error {
-  border-color: red;
+  border-color: #dc3545;
 }
 
 .error-message {
-  color: red;
+  color: #dc3545;
   font-size: 14px;
 }
 
 .button-group {
   display: flex;
-  gap: 10px;
-  justify-content: flex-end;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 120px;
+}
+
+button[type="submit"] {
   background-color: #4CAF50;
   color: white;
 }
 
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
 button[type="button"] {
-  background-color: #9e9e9e;
+  background-color: #6c757d;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #5a6268;
 }
 
 button:disabled {
@@ -206,8 +247,17 @@ button:disabled {
 }
 
 .loading {
-  text-align: center;
-  margin-top: 20px;
-  color: #666;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #495057;
+  z-index: 1000;
 }
 </style> 

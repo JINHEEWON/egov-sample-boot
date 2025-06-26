@@ -100,7 +100,7 @@ const currentPage = ref(0);
 const pageSize = ref(10);
 
 const totalPages = computed(() => 
-  Math.ceil(sampleStore.totalItems / pageSize.value)
+  Math.ceil((sampleStore.totalItems || 0) / pageSize.value)
 );
 
 function formatDate(date: string | null) {
@@ -115,9 +115,9 @@ async function search() {
 
 async function fetchSamples() {
   await sampleStore.fetchSamples(
-    searchCondition.value,
-    searchKeyword.value,
-    searchUseYn.value,
+    searchCondition.value || '',
+    searchKeyword.value || '',
+    searchUseYn.value || '',
     currentPage.value,
     pageSize.value
   );
@@ -150,86 +150,187 @@ onMounted(() => {
 
 <style scoped>
 .sample-view {
-  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
 .search-form {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   display: flex;
-  gap: 10px;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.search-form select,
+.search-form input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-form select {
+  min-width: 120px;
+  background-color: white;
+}
+
+.search-form input {
+  min-width: 250px;
+  flex: 1;
+}
+
+.search-form button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  min-width: 80px;
+}
+
+.search-form button:hover {
+  background-color: #45a049;
+}
+
+.search-form .create-button {
+  background-color: #007bff;
+}
+
+.search-form .create-button:hover {
+  background-color: #0056b3;
 }
 
 .loading {
   text-align: center;
-  padding: 20px;
+  padding: 2rem;
+  color: #666;
 }
 
 .error {
-  color: red;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid red;
+  color: #dc3545;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #dc3545;
   border-radius: 4px;
+  background-color: #f8d7da;
 }
 
 .sample-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .sample-table th,
 .sample-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 1rem;
   text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
 .sample-table th {
-  background-color: #f4f4f4;
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.sample-table th:nth-child(1) { width: 5%; }  /* ID */
+.sample-table th:nth-child(2) { width: 15%; } /* 이름 */
+.sample-table th:nth-child(3) { width: 25%; } /* 설명 */
+.sample-table th:nth-child(4) { width: 8%; }  /* 사용여부 */
+.sample-table th:nth-child(5) { width: 10%; } /* 등록자 */
+.sample-table th:nth-child(6) { width: 12%; } /* 등록일시 */
+.sample-table th:nth-child(7) { width: 12%; } /* 수정일시 */
+.sample-table th:nth-child(8) { width: 13%; } /* 작업 */
+
+.sample-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.sample-table td {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.sample-table button {
+  margin: 0 0.25rem;
+}
+
+.sample-table .edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.sample-table .edit-button:hover {
+  background-color: #0056b3;
+}
+
+.sample-table .delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.sample-table .delete-button:hover {
+  background-color: #c82333;
 }
 
 .no-data {
   text-align: center;
-  padding: 20px;
+  padding: 2rem;
   color: #666;
+  background-color: #f8f9fa;
+  border-radius: 4px;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 10px;
   align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-button {
-  padding: 5px 10px;
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
   cursor: pointer;
+  font-size: 14px;
+  min-width: 80px;
+  transition: all 0.2s;
 }
 
-button:disabled {
+.pagination button:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.pagination button:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
   cursor: not-allowed;
-  opacity: 0.5;
 }
 
-.create-button {
-  margin-left: auto;
-  background-color: #4CAF50;
-  color: white;
-}
-
-.edit-button {
-  background-color: #2196F3;
-  color: white;
-  margin-right: 5px;
-}
-
-.delete-button {
-  background-color: #f44336;
-  color: white;
-}
-
-button:hover {
-  opacity: 0.8;
+.pagination span {
+  font-size: 14px;
+  color: #495057;
 }
 </style> 
