@@ -14,7 +14,7 @@ const { isAuthenticated } = storeToRefs(authStore)
       
       <div v-if="isAuthenticated" class="content">
         <p>You are logged in.</p>
-        <RouterLink to="/sample" class="btn-primary">Go to Samples</RouterLink>
+        <RouterLink to="/samples" class="btn-primary">Go to Samples</RouterLink>
       </div>
       
       <div v-else class="content">

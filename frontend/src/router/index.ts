@@ -8,9 +8,19 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/sample',
-    name: 'sample',
+    path: '/samples',
+    name: 'sample-list',
     component: () => import('../views/SampleView.vue')
+  },
+  {
+    path: '/samples/new',
+    name: 'sample-create',
+    component: () => import('../views/SampleFormView.vue')
+  },
+  {
+    path: '/samples/:id/edit',
+    name: 'sample-edit',
+    component: () => import('../views/SampleFormView.vue')
   }
 ]
 

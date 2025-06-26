@@ -1,5 +1,6 @@
 package org.egovframe.sample.web;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.egovframe.sample.domain.Sample;
 import org.egovframe.sample.dto.SampleSearchDto;
@@ -16,12 +17,14 @@ public class SampleController {
     private final SampleService sampleService;
 
     @PostMapping
-    public ResponseEntity<Sample> insertSample(@RequestBody Sample sample) {
+    public ResponseEntity<Sample> insertSample(@Valid @RequestBody Sample sample) {
         return ResponseEntity.ok(sampleService.insertSample(sample));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Sample> updateSample(@PathVariable Long id, @RequestBody Sample sample) {
+    public ResponseEntity<Sample> updateSample(
+            @PathVariable Long id,
+            @Valid @RequestBody Sample sample) {
         return ResponseEntity.ok(sampleService.updateSample(id, sample));
     }
 

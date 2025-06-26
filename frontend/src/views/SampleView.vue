@@ -16,6 +16,7 @@
         <option value="N">미사용</option>
       </select>
       <button @click="search">검색</button>
+      <button @click="goToCreate" class="create-button">등록</button>
     </div>
 
     <!-- 로딩 표시 -->
@@ -52,8 +53,8 @@
           <td>{{ formatDate(sample.createdAt) }}</td>
           <td>{{ formatDate(sample.updatedAt) }}</td>
           <td>
-            <button @click="editSample(sample)">수정</button>
-            <button @click="deleteSample(sample.id)">삭제</button>
+            <button @click="goToEdit(sample.id)" class="edit-button">수정</button>
+            <button @click="deleteSample(sample.id)" class="delete-button">삭제</button>
           </td>
         </tr>
       </tbody>
@@ -85,9 +86,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useSampleStore } from '@/stores/sample';
 import type { Sample } from '@/types/sample';
 
+const router = useRouter();
 const sampleStore = useSampleStore();
 
 const searchCondition = ref('');
@@ -125,9 +128,12 @@ async function changePage(page: number) {
   await fetchSamples();
 }
 
-async function editSample(sample: Sample) {
-  // TODO: 수정 기능 구현
-  console.log('Edit sample:', sample);
+function goToCreate() {
+  router.push('/samples/new');
+}
+
+function goToEdit(id: number) {
+  router.push(`/samples/${id}/edit`);
 }
 
 async function deleteSample(id: number) {
@@ -204,5 +210,26 @@ button {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.create-button {
+  margin-left: auto;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-button {
+  background-color: #2196F3;
+  color: white;
+  margin-right: 5px;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.8;
 }
 </style> 

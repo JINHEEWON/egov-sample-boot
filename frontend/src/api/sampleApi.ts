@@ -3,6 +3,7 @@ import type { Sample } from '@/types/sample';
 import type { Page } from '@/types/common';
 
 const api = axios.create({
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -51,7 +52,7 @@ const sampleApi = {
     page: number = 0,
     size: number = 10
   ) => {
-    const response = await api.get('/api/samples', {
+    const response = await api.get('/samples', {
       params: {
         searchCondition,
         searchKeyword,
@@ -64,22 +65,22 @@ const sampleApi = {
   },
 
   getSample: async (id: number): Promise<Sample> => {
-    const response = await api.get(`/api/samples/${id}`);
+    const response = await api.get(`/samples/${id}`);
     return response.data;
   },
 
   createSample: async (sample: Sample): Promise<Sample> => {
-    const response = await api.post('/api/samples', sample);
+    const response = await api.post('/samples', sample);
     return response.data;
   },
 
   updateSample: async (sample: Sample): Promise<Sample> => {
-    const response = await api.put(`/api/samples/${sample.id}`, sample);
+    const response = await api.put(`/samples/${sample.id}`, sample);
     return response.data;
   },
 
   deleteSample: async (id: number): Promise<void> => {
-    await api.delete(`/api/samples/${id}`);
+    await api.delete(`/samples/${id}`);
   }
 };
 
