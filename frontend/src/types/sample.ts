@@ -1,9 +1,9 @@
 export interface Sample {
-  id: number;
+  id?: number;
   name: string;
-  description: string;
+  description?: string;
   useYn: string;
-  regUser: string;
-  createdAt: string;
-  updatedAt: string;
+  regUser?: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 } 

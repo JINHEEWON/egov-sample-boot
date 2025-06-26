@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
@@ -43,10 +44,12 @@ public class Sample {
     @Column(name = "reg_user", length = 100)
     private String regUser;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

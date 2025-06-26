@@ -97,9 +97,9 @@ async function loadSample() {
   if (isEdit.value) {
     loading.value = true;
     try {
-      const sample = await sampleStore.fetchSample(Number(route.params.id));
-      if (sample) {
-        form.value = { ...sample };
+      await sampleStore.fetchSample(Number(route.params.id));
+      if (sampleStore.currentSample) {
+        form.value = { ...sampleStore.currentSample };
       }
     } catch (error) {
       console.error('Error loading sample:', error);
@@ -115,6 +115,7 @@ async function handleSubmit() {
 
   try {
     if (isEdit.value) {
+      form.value.id = Number(route.params.id);
       await sampleStore.updateSample(form.value);
     } else {
       await sampleStore.createSample(form.value);
